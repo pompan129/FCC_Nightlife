@@ -1,0 +1,11 @@
+{
+  "name": "nightlife",
+  "version": "1.0.0",
+  "description": "FCC project https://www.freecodecamp.com/challenges/build-a-nightlife-coordination-app",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "kj",
+  "license": "ISC"
+}
