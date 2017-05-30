@@ -1,0 +1,23 @@
+.img{
+  width: 10rem;
+  height:10rem;
+}
+.media{
+  box-shadow: 0 0 1px 1px black;
+  display: flex;
+  align-items: center;
+  background-color: #f5f5ef;
+  margin:1rem 3rem
+}
+
+.btn-container {
+    min-height:100%;
+    display: flex;
+    align-items: center;
+    margin:5px;
+}
+
+.btn{
+  color:white;
+  background-color: #9C5935;
+}

@@ -6,22 +6,14 @@ import SearchBar from './components/search-bar';
 import Home from './components/home';
 import Signup from './components/signup';
 import Signin from './components/signin';
+import Loader from "./components/loader";
 import BusinessList from './components/business-list';
 import {fetchBusinesses} from './actions';
 import logo from './robot_1.png';
 import './App.css';
 
 
-//todo -remove
-var testItems = [{name:"one"},{name:"two"}]
-
 class App extends Component {
-
-  handleFetchBusinesses(location){
-    console.log("handleFetchBusinesses",location);//todo
-    this.props.fetchBusinesses("bar", encodeURI(location));
-  }
-
   render() {
     console.log("App/businesses: ",  this.props.businesses )
     return (
@@ -33,7 +25,7 @@ class App extends Component {
                     <img src={logo} alt="logo" />
                   </div>
                   <h1>Nightlife Coordinate-Imatron</h1>
-                  <SearchBar handleSubmit={this.handleFetchBusinesses.bind(this)}/>
+                  <SearchBar />
                 </div>
                 <Switch>
                   <Route exact path='/' component={Home} />
@@ -45,6 +37,7 @@ class App extends Component {
                 </Switch>
               </div>
             </BrowserRouter>
+            <Loader loading={this.props.message.fetching}/>
         </div>
     );
   }

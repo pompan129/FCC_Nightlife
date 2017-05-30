@@ -1,11 +1,26 @@
 import React from "react";
+import './business-item.css';
 
 const BusinessItem = (props)=>{
-  console.log("ActivetyItem", props)
+  const {name,id,url,image_url,display_phone,price,location} = props.business;
   return (
-    <li className="activety-item">
-      activety {props.business.name}
-    </li>
+    <div className="media">
+        <div className="media-left">
+            <a href={url}>
+                <img src={image_url} className="media-object img" alt="Sample Image"/>
+            </a>
+        </div>
+        <div className="media-body">
+            <h4 className="media-heading">{name}</h4>
+            <div className="phone">{display_phone}</div>
+            <div className="price">{price}</div>
+        </div>
+        <div className="media-right">
+          <div className="btn-container">
+            <div><button className="btn">I'm Going!</button></div>
+          </div>
+        </div>
+    </div>
   )
 
 }

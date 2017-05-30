@@ -7,8 +7,10 @@ export const LOG_OUT = "LOG_OUT";
 export const BATCH_ACTIONS = "BATCH_ACTIONS";
 export const SET_ERROR_MESSAGE = "SET_ERROR_MESSAGE";
 export const SET_BUSINESSES = "SET_BUSINESSES";
+export const FETCHING_START = "FETCHING_STSART";
+export const FETCHING_DONE = "FETCHING_DONE";
 
-export function batchActions(actions) {
+export const  batchActions = (actions)=>{
    return {
       type: BATCH_ACTIONS,
       payload: actions
@@ -44,16 +46,28 @@ const setBusinesses = (businesses)=>{
   }
 }
 
+export const fecthStart = ()=>{
+  return{type:FETCHING_START}
+}
+
+export const fecthDone = ()=>{
+  return{type:FETCHING_DONE}
+}
+
+
 //a thunk
-export const fetchBusinesses = (term, location)=>{
+export const fetchBusinesses = (term, location,callback)=>{
   return (dispatch, getState) => {
-    Axios.get('/api/activites/getall',{params:{term,location}})
+    dispatch(batchActions([setBusinesses({}),fecthStart()]));
+    Axios.get('/api/businesses/getall',{params:{term,location}})
       .then(function (resp) {
-          //console.log(resp.data.businesses);//todo
+          console.log("fetchBusinesses",term,resp.data.businesses);//todo
           const businesses = resp.data.businesses.reduce((accumulator,current)=>{
-            return {...accumulator, [current.id]:{name:current.name}}
+            const {name,id,url,image_url,display_phone,price,location} = current;
+            return {...accumulator, [current.id]:{name,id,url,image_url,display_phone,price,location}}
           },{});
-          dispatch(setBusinesses(businesses));
+          dispatch(batchActions([setBusinesses(businesses),fecthDone()]));
+          callback();
       })
       .catch(function (error) {
         console.log(error);

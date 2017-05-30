@@ -1,5 +1,10 @@
+body,html{
+  background-color: #3C1D0F;
+}
+
 .App {
   text-align: center;
+  background-color: #3C1D0F;
 }
 
 .App-logo {
@@ -28,6 +33,12 @@
   background-size: cover;
   color: white;
   text-shadow:1px 1px 2px black;
+  box-shadow: 0 0 3px 1px black;
+}
+
+.App-header .btn{
+  background-color: #D24229;
+  color:#DDAD84;
 }
 
 .App-header h1{

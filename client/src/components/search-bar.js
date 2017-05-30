@@ -1,5 +1,8 @@
 import React from "react";
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router';
+import {fetchBusinesses} from '../actions';
 
 
 class SearchBar extends React.Component{
@@ -16,22 +19,34 @@ class SearchBar extends React.Component{
 
     handleSubmit(event){
       event.preventDefault();
-      this.props.handleSubmit(this.state.value)
+      this.props.fetchBusinesses("bars",this.state.value,()=>{this.props.history.push("/list")});
     }
 
     render() {
       console.log("SearchBar",this.state.value);//todo
       return (
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Location:
-            <input type="text" value={this.state.value} onChange={this.handleChange} />
-          </label>
-          <input type="submit" value="Submit" />
-        </form>
+        <div className="row">
+          <form onSubmit={this.handleSubmit} className="col-sm-6 col-sm-offset-3">
+            <div className="input-group">
+                      <input type="text"
+                        className="form-control"
+                        value={this.state.value}
+                        onChange={this.handleChange}
+                        placeholder="Address, neighborhood, city, state or zip&hellip;"/>
+                      <span className="input-group-btn">
+                          <button type="submit" className="btn btn-default">Search</button>
+                      </span>
+                  </div>
+          </form>
+        </div>
       );
     }
 }
 
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators(
+      {fetchBusinesses}, dispatch);
+}
+
 const SearchBarWithRouter = withRouter(SearchBar)
-export default SearchBarWithRouter;
+export default connect(null,mapDispatchToProps)(SearchBarWithRouter);
