@@ -2,12 +2,13 @@ import React from "react";
 import './business-item.css';
 
 const BusinessItem = (props)=>{
-  const {name,id,url,image_url,display_phone,price,location} = props.business;
+  const {name,id,url,image_url,display_phone,price,location,going} = props.business;
+  console.log("BusinessItem", props,id);//todo
   return (
     <div className="media">
         <div className="media-left">
             <a href={url}>
-                <img src={image_url} className="media-object img" alt="Sample Image"/>
+                <img src={image_url} className="media-object img" alt={name}/>
             </a>
         </div>
         <div className="media-body">
@@ -17,7 +18,11 @@ const BusinessItem = (props)=>{
         </div>
         <div className="media-right">
           <div className="btn-container">
-            <div><button className="btn">I'm Going!</button></div>
+            <div><button
+              className="btn"
+              onClick={()=>{props.addRemoveUserToBusiness({busid:id,username:localStorage.getItem("username")})}}
+
+              >{going.length} Going</button></div>
           </div>
         </div>
     </div>

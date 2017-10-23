@@ -2,7 +2,6 @@ const express = require('express');
 const app = express();
 var bodyParser = require("body-parser");
 const path = require('path');
-const https = require('https');
 const Routes = require("./server/routes");
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -24,7 +23,9 @@ if (process.env.NODE_ENV === 'production') {
 
 //set up database
 var mongoose = require('mongoose');
-mongoose.connect(`mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@ds129031.mlab.com:29031/heroku_shwjhvsb`);
+//mongodb://<dbuser>:<dbpassword>@ds157571.mlab.com:57571/heroku_mrcz13gs
+console.log("connecting to mongoDB",process.env.DB_USER,process.env.DB_PASS );// we're connected!
+mongoose.connect(`mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@ds157571.mlab.com:57571/heroku_mrcz13gs`);
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));

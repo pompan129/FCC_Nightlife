@@ -3,11 +3,14 @@
   height:10rem;
 }
 .media{
-  box-shadow: 0 0 1px 1px black;
+  /*box-shadow: 0 0 2px 1px grey;*/
+  border:3px solid #2E3409;
   display: flex;
   align-items: center;
-  background-color: #f5f5ef;
-  margin:1rem 3rem
+  background-color: #F7EDD4;
+  margin:1rem 3rem;
+  color: #2E3409;
+  /*text-shadow: 1px 1px 1px grey;*/
 }
 
 .btn-container {
@@ -17,7 +20,18 @@
     margin:5px;
 }
 
-.btn{
+.media .btn{
+  color:#2E3409;
+  font-weight: bold;
+  font-size: 2rem;
+  background-color: white;
+  border-radius:0;
+  border:3px solid #2E3409;
+  padding: 2rem .5rem;
+}
+
+.media .btn:hover{
+  background-color: #2E3409;
   color:white;
-  background-color: #9C5935;
+  border:3px solid white;
 }

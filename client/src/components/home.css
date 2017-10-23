@@ -1,0 +1,8 @@
+.home p{
+  font-size: 2em;
+  font-weight: bold;
+  color: white;
+  /*text-shadow: 0 0 2px black;*/
+  color:#0E0700;
+  margin-top: 2rem;
+}

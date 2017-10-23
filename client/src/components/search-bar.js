@@ -24,10 +24,17 @@ class SearchBar extends React.Component{
 
     render() {
       console.log("SearchBar",this.state.value);//todo
+      if(localStorage.getItem("location") && localStorage.getItem("term")){
+          this.props.fetchBusinesses(localStorage.getItem("term"),
+            localStorage.getItem("location"),
+            ()=>{this.props.history.push("/list")});
+      }
+      
       return (
         <div className="row">
           <form onSubmit={this.handleSubmit} className="col-sm-6 col-sm-offset-3">
             <div className="input-group">
+               <span className="input-group-addon"><span className="glyphicon glyphicon-map-marker"></span></span>
                       <input type="text"
                         className="form-control"
                         value={this.state.value}

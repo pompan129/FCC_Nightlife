@@ -1,16 +1,20 @@
 import React from "react";
 import BusinessItem from "./business-item";
+import "./business-list.css";
+
 
 const BusinessList = (props)=>{
 //todo -fix key in list
-  console.log("ActivetyList", props)
+  console.log("BusinessList", props)
 
-  return <div className="activety-list">
-    Activety List
-    <div className="business-list">
-      {Object.keys(props.list).map((key,index)=><BusinessItem key={key} business={props.list[key]}  ></BusinessItem>)}
+  return <div className="business-list">
+      {Object.keys(props.list).map((key,index)=><BusinessItem
+        key={key}
+        business={props.list[key]}
+        addRemoveUserToBusiness = {props.addRemoveUserToBusiness}
+        ></BusinessItem>)}
     </div>
-  </div>
+
 }
 
 export default BusinessList;

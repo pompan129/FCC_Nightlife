@@ -7,9 +7,14 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "kj",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pompan129/FCC_Nightlife.git"
+  },
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^1.0.2",
+    "axios": "^0.16.1",
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
     "jwt-simple": "^0.5.1",

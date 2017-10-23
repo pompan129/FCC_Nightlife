@@ -7,6 +7,7 @@ const getToken = function(payload){
 
 
 exports.signup = function(req, res, next){
+    console.log("exports.signup===========",req.body);//todo
     const username = req.body.username;
     const password = req.body.password;
 
@@ -17,7 +18,7 @@ exports.signup = function(req, res, next){
     User.findOne({username:username},function(err,exists){
       if(err){return next(err);}
       if(exists){
-        console.log("erorr: USER EXISTS");//todo
+        console.log("error: USER EXISTS");//todo
          res.status(422);
           return  res.send({ error: 'Email is in use' });
       }
