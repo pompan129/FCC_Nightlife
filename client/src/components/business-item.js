@@ -3,7 +3,6 @@ import './business-item.css';
 
 const BusinessItem = (props)=>{
   const {name,id,url,image_url,display_phone,price,location,going} = props.business;
-  console.log("BusinessItem", props,id);//todo
   return (
     <div className="media">
         <div className="media-left">

@@ -41,7 +41,6 @@ export const setErrorMessage = (message)=>{
 }
 
 const setBusinesses = (businesses)=>{
-  console.log("setBusinesses", businesses);//todo
   return {
     type: SET_BUSINESSES,
     payload: businesses
@@ -81,7 +80,7 @@ export const fetchBusinesses = (term, location,callback)=>{
     }
 
     dispatch(batchActions([setBusinesses({}),fecthStart()]));
-    
+
     Axios.get('/api/businesses/getall',{params:{term,location}})
       .then(function (resp) {
           console.log("fetchBusinesses",term, resp.data);//todo

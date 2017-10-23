@@ -17,7 +17,6 @@ import './App.css';
 
 class App extends Component {
   render() {
-    console.log("render>App",  this.props,  addRemoveUserToBusiness)
     return (
         <div className="App">
             <BrowserRouter>
@@ -29,14 +28,16 @@ class App extends Component {
                     authenticated={this.props.user.authenticated}></Navbar>
                     <Link to="/">
                       <div className="App-logo">
-                        <img src={logo} alt="logo" />
+                        <img src={logo} alt="logo"/>
                       </div>
                     </Link>
                   <h1>Nightlife Coordinate-Imatron</h1>
                   <SearchBar />
                 </div>
                 <Switch>
-                  <Route exact path='/' component={Home} />
+                  <Route exact path='/'
+                    render={()=><Home
+                    fetchBusinesses={this.props.fetchBusinesses} />} />
                   <Route  path='/list'
                     render={()=><BusinessList
                       addRemoveUserToBusiness={this.props.addRemoveUserToBusiness}
