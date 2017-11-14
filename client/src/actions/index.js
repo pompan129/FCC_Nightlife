@@ -13,6 +13,7 @@ export const FETCHING_DONE = "FETCHING_DONE";
 export const MODIFY_BUSINESS_GOING = "MODIFY_BUSINESS_GOING";
 
 export const  batchActions = (actions)=>{
+  console.log("batchActions");//todo
    return {
       type: BATCH_ACTIONS,
       payload: actions
@@ -41,6 +42,8 @@ export const setErrorMessage = (message)=>{
 }
 
 const setBusinesses = (businesses)=>{
+  console.log("setBusinesses");//todo
+
   return {
     type: SET_BUSINESSES,
     payload: businesses
@@ -83,18 +86,21 @@ export const fetchBusinesses = (term, location,callback)=>{
 
     Axios.get('/api/businesses/getall',{params:{term,location}})
       .then(function (resp) {
-          console.log("fetchBusinesses",term, resp.data);//todo
+          console.log("fetchBusinesses",term, resp);//todo
           localStorage.setItem("location",location);
           localStorage.setItem("term",term);
           const businesses = resp.data.reduce((accumulator,current)=>{
             const {name,id,url,image_url,display_phone,price,location,going} = current;
             return {...accumulator, [current.id]:{name,id,url,image_url,display_phone,price,location,going}}
           },{});
-          dispatch(batchActions([setBusinesses(businesses),fecthDone()]));
           callback();
+          dispatch(batchActions([setBusinesses(businesses),fecthDone()]));
+          console.log("fetchBusinesses(2)",callback);//todo
+          //callback();
       })
       .catch(function (error) {
         console.log(error);
+        dispatch(batchActions([setErrorMessage(error.message),fecthDone()]));
       });
   }
 }

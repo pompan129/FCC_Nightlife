@@ -6,6 +6,7 @@ import thunk from 'redux-thunk';
 import {setAuthentication} from "./actions";
 import App from './App';
 import reducers ,{enableBatching} from './reducers';
+import{BrowserRouter } from 'react-router-dom'
 import './index.css';
 
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
@@ -21,6 +22,8 @@ if(token && username){
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </Provider> ,
   document.getElementById('root'));

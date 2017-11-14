@@ -44,7 +44,7 @@ module.exports = function(app){
     })
     .catch((error)=>{
         console.log(error.message,Object.keys(error),error.response.status);
-        resp.send(error.message);
+        resp.send({error:true , message:error.message, status:error.response.status});
     })
   });
 

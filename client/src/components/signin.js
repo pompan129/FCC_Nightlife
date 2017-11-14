@@ -27,7 +27,6 @@ class Signin extends Component{
   }
 
   render(){
-    console.log("Signin", this.state);// TODO:
     return (
       <div className="signin-panel">
         <form onSubmit={this.handleSubmit}>
