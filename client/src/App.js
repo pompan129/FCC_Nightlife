@@ -11,7 +11,7 @@ import Signin from './components/signin';
 import Loader from "./components/loader";
 import ModalWrapper from "./components/modal-wrapper";
 import BusinessList from './components/business-list';
-import {fetchBusinesses,renderModal,signOut,addRemoveUserToBusiness} from './actions';//todo remove fetchBusinesses?
+import {fetchBusinesses,renderModal,signOut,addRemoveUserToBusiness,setAuthErrorMessage} from './actions';//todo remove fetchBusinesses?
 import logo from './robot_1.png';
 import './App.css';
 
@@ -28,7 +28,8 @@ class App extends Component {
                 authenticated={this.props.user.authenticated}>
               </Navbar>
               <Link to="/">
-                <div className="App-logo">
+                <div className="App-logo"
+                  onClick={()=>{localStorage.setItem("location","");}}>
                   <img src={logo} alt="logo"/>
                 </div>
               </Link>
@@ -43,9 +44,12 @@ class App extends Component {
                   list={this.props.businesses}/>} />
             </Switch>
             <Loader loading={this.props.message.fetching}/>
-            <ModalWrapper visible={this.props.modal.type} handleVisibility={()=>this.props.renderModal(false)}>
-              {this.props.modal.type==="signup" && <Signup></Signup>}
-              {this.props.modal.type==="signin" && <Signin></Signin>}
+            <ModalWrapper
+              visible={this.props.modal.type} 
+              setAuthErrorMessage={(msg)=>this.props.setAuthErrorMessage(msg)}
+              handleVisibility={()=>this.props.renderModal(false)}>
+                {this.props.modal.type==="signup" && <Signup></Signup>}
+                {this.props.modal.type==="signin" && <Signin></Signin>}
             </ModalWrapper>
         </div>
     );
@@ -58,7 +62,7 @@ function mapStateToProps({user,businesses,message,modal}){
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(
-      {fetchBusinesses,renderModal,signOut,addRemoveUserToBusiness}, dispatch);
+      {fetchBusinesses,renderModal,signOut,addRemoveUserToBusiness,setAuthErrorMessage}, dispatch);
 }
 
 export default withRouter(connect(mapStateToProps,mapDispatchToProps)(App));

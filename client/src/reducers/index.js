@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import userReducer from './user-reducer';
 import businessesReducer from './businesses-reducer';
-import messageReducer from './message-reducer';
+import messageReducer from './app-message-reducer';
 import modalReducer from './modal-reducer';
 import {BATCH_ACTIONS} from "../actions";
 

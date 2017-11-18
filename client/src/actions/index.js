@@ -11,6 +11,7 @@ export const SET_BUSINESSES = "SET_BUSINESSES";
 export const FETCHING_START = "FETCHING_STSART";
 export const FETCHING_DONE = "FETCHING_DONE";
 export const MODIFY_BUSINESS_GOING = "MODIFY_BUSINESS_GOING";
+export const SET_AUTH_ERROR = "SET_AUTH_ERROR";
 
 export const  batchActions = (actions)=>{
   console.log("batchActions");//todo
@@ -41,6 +42,12 @@ export const setErrorMessage = (message)=>{
   }
 }
 
+export const setAuthErrorMessage = (message)=>{
+  return {
+    type: SET_AUTH_ERROR,
+    payload: message
+  }
+}
 const setBusinesses = (businesses)=>{
   console.log("setBusinesses");//todo
 
@@ -131,6 +138,7 @@ export const addRemoveUserToBusiness = ({busid, username})=>{
 //a thunk
 export const signupUser = ({email,password})=>{
   console.log("signupUser",email,password);// TODO:
+  const batch = [];
   return (dispatch, getState) => {
     Axios.post('/api/user/signup',{username:email,password})
         .then(function (resp) {
@@ -138,12 +146,15 @@ export const signupUser = ({email,password})=>{
             localStorage.setItem('jwt', resp.data.token);
             localStorage.setItem('username', resp.data.username);
             dispatch(batchActions(
-              [setAuthentication(true),setUsername(resp.data.username),renderModal(false)]
+              [setAuthErrorMessage(),setAuthentication(true),setUsername(resp.data.username),renderModal(false)]
             ));
           }
         })
         .catch(function (error) {
-          console.log("Error>:",error.response.data.error);
+              console.log("signupUserError> ",error.response);
+              batch.push(signOut());
+              batch.push(setAuthErrorMessage(error.response.data.error));
+              dispatch(batchActions(batch));
         });
     }
 }
@@ -159,13 +170,13 @@ export const signinUser = ({email,password})=>{
             localStorage.setItem('username', resp.data.username);
             batch.push(setAuthentication(true));
             batch.push(setUsername(resp.data.username));
-            batch.push(setErrorMessage());//set error to Undefined
+            batch.push(setAuthErrorMessage());//set error to Undefined
             batch.push(renderModal(false));
             dispatch(batchActions(batch));
           }else{
             console.log('error.response.data === "else"');
             batch.push(signOut());
-            batch.push(setErrorMessage("Not able to authenticate."));
+            batch.push(setAuthErrorMessage("server error.Not able to authenticate."));
             dispatch(batchActions(batch));
           }
         })
@@ -173,7 +184,7 @@ export const signinUser = ({email,password})=>{
           if(error.response.data === "Unauthorized"){
               console.log("signinUser error = ",error.response);
               batch.push(signOut());
-              batch.push(setErrorMessage("Oops! Error:" + error.response.status + " " + error.response.statusText));
+              batch.push(setAuthErrorMessage(`Oops! ${error.response.status} ${error.response.statusText}`));
               dispatch(batchActions(batch));
           }
         });

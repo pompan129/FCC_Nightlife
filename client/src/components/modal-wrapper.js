@@ -7,7 +7,9 @@ const ModalWrapper = (props)=>{
    return (
       <div  className="modal-wrap">
          <div className="msg-modal-backdrop"
-           onClick={()=>props.handleVisibility(false)}></div>
+           onClick={()=>{
+             props.setAuthErrorMessage();
+             props.handleVisibility(false);}}></div>
          <div className="msg-modal">
             {props.children}
          </div>

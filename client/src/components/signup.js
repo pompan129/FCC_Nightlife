@@ -26,10 +26,17 @@ class Signup extends Component{
       this.props.signupUser(this.state);
   }
 
+  renderError(){
+    if(this.props.error){
+      return <div className="alert alert-danger">{this.props.error}</div>
+    }
+  }
+
   render(){
     console.log("Signup", this.state);// TODO:
     return (
       <div className="signup-panel">
+        <h3>Signup</h3>
         <form onSubmit={this.handleSubmit}>
           <div className="form-group">
               <label htmlFor="email">Email</label>
@@ -50,6 +57,7 @@ class Signup extends Component{
                 placeholder="Password"/>
           </div>
           <div className="btn-panel">
+            {this.renderError()}
             <button type="submit" className="btn btn-primary">Submit</button>
           </div>
       </form>
@@ -63,5 +71,9 @@ function mapDispatchToProps(dispatch) {
       {signupUser}, dispatch);
 }
 
+function mapStateToProps(state){
+  return {error:state.user.error}
+}
 
-export default connect(null,mapDispatchToProps)(Signup);
+
+export default connect(mapStateToProps,mapDispatchToProps)(Signup);

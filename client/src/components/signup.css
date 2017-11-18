@@ -4,13 +4,13 @@
    padding:1rem;
    font-size: 1.25rem;
    border:1px solid black;
-   width: 200px;/* TODO:  */
-   height:200px;/* TODO:  */
+  /* width: 200px;/* TODO:  */
+  /* height:200px;/* TODO:  */
    top: 50%;
    left: 50%;
    transform: translate(-50%, -50%);
    text-align: left;
-
+   border: 2px solid #2E3409;
 }
 
 .btn-panel{

@@ -25,10 +25,16 @@ class Signin extends Component{
       event.preventDefault();
       this.props.signinUser(this.state);
   }
+  renderError(){
+    if(this.props.error){
+      return <div className="alert alert-danger">{this.props.error}</div>
+    }
+  }
 
   render(){
     return (
       <div className="signin-panel">
+        <h3>Sign In</h3>
         <form onSubmit={this.handleSubmit}>
           <div className="form-group">
               <label htmlFor="email">Email</label>
@@ -49,6 +55,7 @@ class Signin extends Component{
                 placeholder="Password"/>
           </div>
           <div className="btn-panel">
+            {this.renderError()}
             <button type="submit" className="btn btn-primary">Submit</button>
           </div>
       </form>
@@ -62,5 +69,9 @@ function mapDispatchToProps(dispatch) {
       {signinUser}, dispatch);
 }
 
+function mapStateToProps(state){
+  return {error:state.user.error}
+}
 
-export default connect(null,mapDispatchToProps)(Signin);
+
+export default connect(mapStateToProps,mapDispatchToProps)(Signin);
