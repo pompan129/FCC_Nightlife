@@ -48,6 +48,14 @@ module.exports = function(app){
     })
   });
 
+  app.post('/auth/twitter/token',
+    passport.authenticate('twitter-token'),
+    function (req, res) {
+      // do something with req.user
+      res.send(req.user ? 200 : 401);
+    }
+  );
+
   app.post('/api/user/signup', Authenticate.signup);
 
   app.post('/api/user/signin', authenticateLocal, Authenticate.signin);
