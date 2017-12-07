@@ -19,7 +19,7 @@ const BusinessItem = (props)=>{
           <div className="btn-container">
             <div><button
               className="btn"
-              onClick={()=>{props.addRemoveUserToBusiness({busid:id,username:localStorage.getItem("username")})}}
+              onClick={()=>{props.addRemoveUserToBusiness(id)}}
 
               >{going.length} Going</button></div>
           </div>

@@ -12,9 +12,9 @@ export const FETCHING_START = "FETCHING_STSART";
 export const FETCHING_DONE = "FETCHING_DONE";
 export const MODIFY_BUSINESS_GOING = "MODIFY_BUSINESS_GOING";
 export const SET_AUTH_ERROR = "SET_AUTH_ERROR";
+export const AUTH_JWT = "AUTH_JWT";
 
 export const  batchActions = (actions)=>{
-  console.log("batchActions");//todo
    return {
       type: BATCH_ACTIONS,
       payload: actions
@@ -48,6 +48,7 @@ export const setAuthErrorMessage = (message)=>{
     payload: message
   }
 }
+
 const setBusinesses = (businesses)=>{
   console.log("setBusinesses");//todo
 
@@ -58,7 +59,6 @@ const setBusinesses = (businesses)=>{
 }
 
 const modifyBusinessGoing = (busid, going)=>{
-  console.log("modifyBusinessGoing-action",busid, going);//todo
   return {
     type: MODIFY_BUSINESS_GOING,
     payload: {busid, going}
@@ -78,6 +78,33 @@ export const fecthStart = ()=>{
 
 export const fecthDone = ()=>{
   return{type:FETCHING_DONE}
+}
+
+export const authRefreshJWT = (token)=>{
+  return (dispatch, getState) => {
+    console.log("authJWT called>>>");//TODO
+
+    if(!token){
+      dispatch(batchActions([setUsername(""), setAuthentication(false)]));
+      return console.log("authJWT called w/out JWT");//TODO
+    }
+
+    //start spinner
+    dispatch(fecthStart());
+
+    //verify token w API
+    Axios.get('/api/auth/refresh/jwt',{params:{token}, headers:{"Authorization":"Bearer " + token}})
+      .then((resp)=>{
+        console.log("Axios.get('/api/auth/refresh/jwt': ",resp)//TODO
+
+        dispatch(batchActions([setUsername(resp.data.username), setAuthentication(true),fecthDone()]));
+        localStorage.setItem("jwt",token);
+      })
+      .catch(function (error){
+          dispatch(batchActions([setUsername(""), setAuthentication(false),setErrorMessage(error.message),fecthDone()]));
+
+        });
+  }
 }
 
 //a thunk
@@ -113,11 +140,11 @@ export const fetchBusinesses = (term, location,callback)=>{
 }
 
 //a thunk
-export const addRemoveUserToBusiness = ({busid, username})=>{
-    console.log("addRemoveUserToBusiness(1)>>",busid,username)
+export const addRemoveUserToBusiness = (busid)=>{
+    console.log("addRemoveUserToBusiness(1)>>",busid)
     return (dispatch, getState) => {
-      if(getState().user.authenticated){
-          Axios.post('/api/business/modify',{user:username,busid})
+      if(getState().user.authenticated  && getState().user.username){
+          Axios.post('/api/business/modify',{user:getState().user.username,busid})
           .then(function (resp) {
             if(resp.data.success){
               console.log("addRemoveUserToBusiness(2)",  resp.data);//todo
@@ -144,7 +171,6 @@ export const signupUser = ({email,password})=>{
         .then(function (resp) {
           if(resp.data.success){
             localStorage.setItem('jwt', resp.data.token);
-            localStorage.setItem('username', resp.data.username);
             dispatch(batchActions(
               [setAuthErrorMessage(),setAuthentication(true),setUsername(resp.data.username),renderModal(false)]
             ));
@@ -167,7 +193,6 @@ export const signinUser = ({email,password})=>{
         .then(function (resp) {
           if(resp.data.success){
             localStorage.setItem('jwt', resp.data.token);
-            localStorage.setItem('username', resp.data.username);
             batch.push(setAuthentication(true));
             batch.push(setUsername(resp.data.username));
             batch.push(setAuthErrorMessage());//set error to Undefined
@@ -193,9 +218,6 @@ export const signinUser = ({email,password})=>{
 
 export const signOut=()=>{
   localStorage.removeItem("jwt");
-  localStorage.removeItem("username");
-  //localStorage.removeItem("term");
-  //localStorage.removeItem("location");
   const batch = [];
   batch.push(setAuthentication(false));
   batch.push(setUsername(""));

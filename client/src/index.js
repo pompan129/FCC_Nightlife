@@ -15,11 +15,11 @@ const store = createStoreWithMiddleware(enableBatching(reducers));
 const token = localStorage.getItem("jwt");
 const username = localStorage.getItem("username");
 
-
+/* TODO
 if(token && username){
   store.dispatch(setAuthentication(true));
 }
-
+*/
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>

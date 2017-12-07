@@ -2,6 +2,7 @@ import React ,{Component}from "react";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {signinUser} from "../actions";
+import TwitterLogin from 'react-twitter-auth';
 import "./signin.css";
 
 
@@ -25,6 +26,16 @@ class Signin extends Component{
       event.preventDefault();
       this.props.signinUser(this.state);
   }
+
+  onTwitterFail(error){
+    console.log("onTwitterFail",error);
+  }
+
+  onTwitterSuccess(){
+    console.log("onTwitterSuccess");
+  }
+
+
   renderError(){
     if(this.props.error){
       return <div className="alert alert-danger">{this.props.error}</div>
@@ -59,6 +70,16 @@ class Signin extends Component{
             <button type="submit" className="btn btn-primary">Submit</button>
           </div>
       </form>
+      <hr/>
+      <div className="social-logins">
+        <h3>or</h3>
+        <TwitterLogin   loginUrl="/api/auth/twitter"
+            requestTokenUrl="/api/auth/twitter/reverse"
+            onFailure={this.onTwitterFail}
+            onSuccess={this.onTwitterSuccess}
+          >
+        </TwitterLogin>
+      </div>
       </div>
     )
   }

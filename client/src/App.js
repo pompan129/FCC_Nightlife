@@ -11,15 +11,31 @@ import Signin from './components/signin';
 import Loader from "./components/loader";
 import ModalWrapper from "./components/modal-wrapper";
 import BusinessList from './components/business-list';
-import {fetchBusinesses,renderModal,signOut,addRemoveUserToBusiness,setAuthErrorMessage} from './actions';//todo remove fetchBusinesses?
+import {fetchBusinesses,
+    renderModal,
+    signOut,
+    addRemoveUserToBusiness,
+    setAuthErrorMessage,
+    authRefreshJWT
+  } from './actions';//todo remove fetchBusinesses?
 import logo from './robot_1.png';
 import './App.css';
 
 
 class App extends Component {
+  componentWillMount() {
+    const token = localStorage.getItem("jwt");
+      if(!this.props.user.authenticated && token){
+        console.log("!Auth w token>>>",token);//TODO
+        localStorage.setItem("jwt","");
+        this.props.authRefreshJWT(token);
+      }
+  }
+
   render() {
     console.log("APP: ",this.props);
-    return (
+
+      return (
         <div className="App">
             <div className="App-header">
               <Navbar
@@ -45,14 +61,14 @@ class App extends Component {
             </Switch>
             <Loader loading={this.props.message.fetching}/>
             <ModalWrapper
-              visible={this.props.modal.type} 
+              visible={this.props.modal.type}
               setAuthErrorMessage={(msg)=>this.props.setAuthErrorMessage(msg)}
               handleVisibility={()=>this.props.renderModal(false)}>
                 {this.props.modal.type==="signup" && <Signup></Signup>}
                 {this.props.modal.type==="signin" && <Signin></Signin>}
             </ModalWrapper>
         </div>
-    );
+      );
   }
 }
 
@@ -62,7 +78,13 @@ function mapStateToProps({user,businesses,message,modal}){
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(
-      {fetchBusinesses,renderModal,signOut,addRemoveUserToBusiness,setAuthErrorMessage}, dispatch);
+      {fetchBusinesses,
+        renderModal,
+        signOut,
+        addRemoveUserToBusiness,
+        setAuthErrorMessage,
+        authRefreshJWT
+      }, dispatch);
 }
 
 export default withRouter(connect(mapStateToProps,mapDispatchToProps)(App));

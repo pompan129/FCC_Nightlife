@@ -4,11 +4,12 @@ const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const User = require("./models/user");
 const TwitterStrategy = require('passport-twitter').Strategy;
+const config = require('./envVars');
 
 //passport strategies
 passport.use(new TwitterStrategy({
-    consumerKey: TWITTER_CONSUMER_KEY,
-    consumerSecret: TWITTER_CONSUMER_SECRET,
+    consumerKey: config.TWITTER_CONSUMER_KEY,
+    consumerSecret: config.TWITTER_CONSUMER_SECRET,
     callbackURL: "http://127.0.0.1:3000/auth/twitter/callback"
   },
   function(token, tokenSecret, profile, done) {
@@ -39,17 +40,19 @@ passport.use(new LocalStrategy(
   }
 ));
 
+
 const jwtStrategyOptions = {
-  jwtFromRequest:(req)=>{return req.headers.authorization}, //ExtractJwt.fromHeader("Authorization"),
-  secretOrKey: process.env.SECRET
+  jwtFromRequest:ExtractJwt.fromAuthHeaderWithScheme("Bearer"), //ExtractJwt.fromHeader("Authorization"),
+  secretOrKey: process.env.SECRET//"bad-secret"//
 };
 
 passport.use(new JwtStrategy(jwtStrategyOptions, function(jwt_payload, done) {
-    User.findOne({ username: jwt_payload.username }, function (err, user) {
+            console.log("JwtStrategy:jwt_payload>", jwt_payload);//todo
+      User.findOne({ username: jwt_payload.username }, function (err, user) {
       if (err) { return done(err); }
       if (user) {
         return done(null, user);
       }
       return done(null, false);
-      });
+    });
   }));

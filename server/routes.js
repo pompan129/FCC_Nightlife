@@ -7,6 +7,7 @@ var mongoose = require ("mongoose");
 const Authenticate = require("./authenticate");
 const Business = require("./models/business");
 
+
 const authenticateLocal = passport.authenticate('local', { session: false });
 const authenticateJWT = passport.authenticate('jwt', { session: false });
 
@@ -48,13 +49,21 @@ module.exports = function(app){
     })
   });
 
-  app.post('/auth/twitter/token',
-    passport.authenticate('twitter-token'),
-    function (req, res) {
-      // do something with req.user
-      res.send(req.user ? 200 : 401);
-    }
-  );
+  app.post('/api/auth/twitter',(req,resp)=>{
+    console.log("/api/auth/twitter");
+  });
+
+  app.post('/api/auth/twitter/reverse',(req,resp)=>{
+    console.log("/api/auth/twitter/reverse");
+  });
+
+  app.get('/api/auth/refresh/jwt',authenticateJWT,(req,resp)=>{
+    resp.send({msg:"success", username:req.user.username});//todo
+  })
+
+  app.get('/api/auth/jwt',authenticateJWT,(req,resp)=>{
+    resp.send({msg:"testJWT"});//todo
+  })
 
   app.post('/api/user/signup', Authenticate.signup);
 
@@ -109,9 +118,6 @@ module.exports = function(app){
   app.get('/api/businesses/attending',(req,resp)=>{
       const  {businesses} = req.query;
       console.log("attending>>",  businesses);// TODO:
-
     })
-
-
 
 }

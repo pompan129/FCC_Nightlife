@@ -2,7 +2,9 @@ const User = require("./models/user");
 const jwt = require("jwt-simple");
 
 const getToken = function(payload){
-  return jwt.encode(payload, process.env.SECRET );
+  const token = jwt.encode({username:payload.username}, process.env.SECRET );
+  console.log("getToken:  ",process.env.SECRET, token);
+  return token;
 }
 
 
