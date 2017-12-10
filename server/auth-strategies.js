@@ -13,8 +13,6 @@ passport.use(new TwitterTokenStrategy({
       consumerSecret: 'bOfqtuMKH7hnoPaGfu6z4xrANFcNuoXXoBgXyrhYJI4iFdkLFs'
     },
     function (token, tokenSecret, profile, done) {
-      console.log("TwitterTokenStrategy>>",profile.username);//TODO  profile
-
       User.findOne({username:profile.username.toLowerCase()},function(err,user){
         if(user){
           console.log("USER EXISTS");//todo
@@ -58,7 +56,6 @@ const jwtStrategyOptions = {
 };
 
 passport.use(new JwtStrategy(jwtStrategyOptions, function(jwt_payload, done) {
-            console.log("JwtStrategy:jwt_payload>", jwt_payload);//todo
       User.findOne({ username: jwt_payload.username }, function (err, user) {
       if (err) { return done(err); }
       if (user) {

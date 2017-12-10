@@ -29,7 +29,6 @@ module.exports = function(app){
       }
     })
     .then((response)=>{
-      console.log("/api/businesses/getall     > ",response.data.businesses);
       const yelpBusinesses = response.data.businesses;
       const yelpBusinessNames = yelpBusinesses.map((value)=>{return value.id});
 
@@ -79,14 +78,12 @@ module.exports = function(app){
        return res.send(401, 'User Not Authenticated');
      }
 
-     console.log("/auth/twitter user (2): ",req.user);
      res.setHeader('x-auth-token', getToken({username:req.user.username}));
      return res.status(200).json({username:req.user.username});
    }
   );
 
   app.post('/api/auth/twitter/reverse',(req,resp)=>{
-    console.log("/api/auth/twitter/reverse");
 
     //get auth token & scret from twitter
     request.post({
@@ -108,11 +105,11 @@ module.exports = function(app){
   });
 
   app.get('/api/auth/refresh/jwt',authenticateJWT,(req,resp)=>{
-    resp.send({msg:"success", username:req.user.username});//todo
+    resp.send({msg:"success", username:req.user.username});
   })
 
   app.get('/api/auth/jwt',authenticateJWT,(req,resp)=>{
-    resp.send({msg:"testJWT"});//todo
+    resp.send({msg:"testJWT"});//todo - make loging into business a protected route
   })
 
   app.post('/api/user/signup', Authenticate.signup);
@@ -161,8 +158,8 @@ module.exports = function(app){
     })
   });
 
-  app.get('/api/businesses/attending',(req,resp)=>{//TODO what is this???
+  /*app.get('/api/businesses/attending',(req,resp)=>{//TODO what is this???
       const  {businesses} = req.query;
-    })
+    })*/
 
 }

@@ -25,7 +25,7 @@ if (process.env.NODE_ENV === 'production') {
 var mongoose = require('mongoose');
 //mongodb://<dbuser>:<dbpassword>@ds157571.mlab.com:57571/heroku_mrcz13gs
 //*****mongodb://<dbuser>:<dbpassword>@ds259855.mlab.com:59855/nightlife
-console.log("connecting to mongoDB",process.env.DB_USER,process.env.DB_PASS );// we're connected!
+console.log("connecting to mongoDB");// we're connected!
 mongoose.connect(`mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@ds259855.mlab.com:59855/nightlife`);
 
 var db = mongoose.connection;
