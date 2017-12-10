@@ -90,8 +90,8 @@ module.exports = function(app){
       url: 'https://api.twitter.com/oauth/request_token',
       oauth: {
         oauth_callback: "http%3A%2F%2Flocalhost%3A3000%2Ftwitter-callback",
-        consumer_key: '2VVu4jwpQtrKIG7hX6qJOhgCP',
-        consumer_secret: 'bOfqtuMKH7hnoPaGfu6z4xrANFcNuoXXoBgXyrhYJI4iFdkLFs'
+        consumer_key:  process.env.TWITTER_CONSUMER_KEY,
+        consumer_secret: process.env.TWITTER_CONSUMER_SECRET
       }
     }, function (err, r, body) {
       if (err) {

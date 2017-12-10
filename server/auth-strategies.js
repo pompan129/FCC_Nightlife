@@ -4,13 +4,13 @@ const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const User = require("./models/user");
 const TwitterTokenStrategy = require('passport-twitter-token');
-const config = require('./envVars');
+//const config = require('./envVars');
 
 
 //passport strategies
 passport.use(new TwitterTokenStrategy({
-      consumerKey: '2VVu4jwpQtrKIG7hX6qJOhgCP',
-      consumerSecret: 'bOfqtuMKH7hnoPaGfu6z4xrANFcNuoXXoBgXyrhYJI4iFdkLFs'
+      consumer_key:  process.env.TWITTER_CONSUMER_KEY,
+      consumer_secret: process.env.TWITTER_CONSUMER_SECRET
     },
     function (token, tokenSecret, profile, done) {
       User.findOne({username:profile.username.toLowerCase()},function(err,user){
