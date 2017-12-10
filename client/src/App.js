@@ -58,6 +58,7 @@ class App extends Component {
                 render={()=><BusinessList
                   addRemoveUserToBusiness={this.props.addRemoveUserToBusiness}
                   list={this.props.businesses}/>} />
+                <Route path='/twitter-callback' render={()=><div></div>} />/*empty route for auth callback url*/
             </Switch>
             <Loader loading={this.props.message.fetching}/>
             <ModalWrapper

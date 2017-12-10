@@ -1,12 +1,13 @@
 const User = require("./models/user");
 const jwt = require("jwt-simple");
 
-const getToken = function(payload){
+getToken = function(payload){
   const token = jwt.encode({username:payload.username}, process.env.SECRET );
-  console.log("getToken:  ",process.env.SECRET, token);
+  console.log("getToken:  ",payload.username,process.env.SECRET, token);
   return token;
 }
 
+exports.getToken = getToken;
 
 exports.signup = function(req, res, next){
     console.log("exports.signup===========",req.body);//todo

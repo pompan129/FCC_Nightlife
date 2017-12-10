@@ -13,6 +13,7 @@ export const FETCHING_DONE = "FETCHING_DONE";
 export const MODIFY_BUSINESS_GOING = "MODIFY_BUSINESS_GOING";
 export const SET_AUTH_ERROR = "SET_AUTH_ERROR";
 export const AUTH_JWT = "AUTH_JWT";
+export const LOGIN_USER_JWT = "LOGIN_USER_JWT"
 
 export const  batchActions = (actions)=>{
    return {
@@ -66,6 +67,7 @@ const modifyBusinessGoing = (busid, going)=>{
 }
 
 export const renderModal = (modalType)=>{
+  console.log("renderModal",modalType)
   return {
     type: RENDER_MODAL,
     payload: modalType
@@ -80,6 +82,16 @@ export const fecthDone = ()=>{
   return{type:FETCHING_DONE}
 }
 
+export const LoginUser_JWT=(jwt,username)=>{
+  console.log("LoginUser_JWT", jwt,username);
+  localStorage.setItem("jwt",jwt);
+  return {
+    type: LOGIN_USER_JWT,
+    payload: username
+  }
+}
+
+//a thunk
 export const authRefreshJWT = (token)=>{
   return (dispatch, getState) => {
     console.log("authJWT called>>>");//TODO
@@ -97,7 +109,7 @@ export const authRefreshJWT = (token)=>{
       .then((resp)=>{
         console.log("Axios.get('/api/auth/refresh/jwt': ",resp)//TODO
 
-        dispatch(batchActions([setUsername(resp.data.username), setAuthentication(true),fecthDone()]));
+        dispatch(batchActions([setUsername(resp.data.username), setAuthentication(true),renderModal(false),fecthDone()]));
         localStorage.setItem("jwt",token);
       })
       .catch(function (error){

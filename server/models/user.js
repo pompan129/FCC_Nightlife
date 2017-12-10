@@ -13,6 +13,8 @@ userSchema.pre('save', function(next) {
   // get access to the user model
   const user = this;
 
+  if(!user.password){return next();}//for social (twitter) login/signup - No Password
+
   // generate a salt then run callback
   bcrypt.genSalt(10, function(err, salt) {
     if (err) { return next(err); }

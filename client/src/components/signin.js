@@ -1,7 +1,7 @@
 import React ,{Component}from "react";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {signinUser} from "../actions";
+import {signinUser,LoginUser_JWT,renderModal} from "../actions";
 import TwitterLogin from 'react-twitter-auth';
 import "./signin.css";
 
@@ -15,6 +15,8 @@ class Signin extends Component{
      }
      this.handleInputChange = this.handleInputChange.bind(this);
      this.handleSubmit = this.handleSubmit.bind(this);
+     this.onTwitterFail = this.onTwitterFail.bind(this);
+     this.onTwitterSuccess = this.onTwitterSuccess.bind(this);
    }
 
   handleInputChange(event){
@@ -31,8 +33,13 @@ class Signin extends Component{
     console.log("onTwitterFail",error);
   }
 
-  onTwitterSuccess(){
-    console.log("onTwitterSuccess");
+  onTwitterSuccess(resp){
+    const token = resp.headers.get('x-auth-token');
+    resp.json().then(data=>{
+      console.log("onTwitterSuccess",data,token, data.username);//TODO
+      this.props.LoginUser_JWT(token, data.username);
+      this.props.renderModal(false);
+    });
   }
 
 
@@ -87,7 +94,7 @@ class Signin extends Component{
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(
-      {signinUser}, dispatch);
+      {signinUser,LoginUser_JWT,renderModal}, dispatch);
 }
 
 function mapStateToProps(state){

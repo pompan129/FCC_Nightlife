@@ -3,23 +3,34 @@ const LocalStrategy = require('passport-local').Strategy;
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const User = require("./models/user");
-const TwitterStrategy = require('passport-twitter').Strategy;
+const TwitterTokenStrategy = require('passport-twitter-token');
 const config = require('./envVars');
 
-//passport strategies
-passport.use(new TwitterStrategy({
-    consumerKey: config.TWITTER_CONSUMER_KEY,
-    consumerSecret: config.TWITTER_CONSUMER_SECRET,
-    callbackURL: "http://127.0.0.1:3000/auth/twitter/callback"
-  },
-  function(token, tokenSecret, profile, done) {
-    User.findOne({ twitterId: profile.id }, function (err, user) {
-      if (err) { return done(err); }
-      return done(err, user);
-    });
-  }
-));
 
+//passport strategies
+passport.use(new TwitterTokenStrategy({
+      consumerKey: '2VVu4jwpQtrKIG7hX6qJOhgCP',
+      consumerSecret: 'bOfqtuMKH7hnoPaGfu6z4xrANFcNuoXXoBgXyrhYJI4iFdkLFs'
+    },
+    function (token, tokenSecret, profile, done) {
+      console.log("TwitterTokenStrategy>>",profile.username);//TODO  profile
+
+      User.findOne({username:profile.username.toLowerCase()},function(err,user){
+        if(user){
+          console.log("USER EXISTS");//todo
+          return done(err,user);
+        }
+
+        const newUser = new User({
+          username: profile.username
+        })
+
+        newUser.save(function(err,newUser){
+            if(err){console.log(err);}
+            return done(err,newUser);
+        })
+      })
+    }));
 
 passport.use(new LocalStrategy(
   function(username, password, done) {
@@ -43,7 +54,7 @@ passport.use(new LocalStrategy(
 
 const jwtStrategyOptions = {
   jwtFromRequest:ExtractJwt.fromAuthHeaderWithScheme("Bearer"), //ExtractJwt.fromHeader("Authorization"),
-  secretOrKey: process.env.SECRET//"bad-secret"//
+  secretOrKey: process.env.SECRET
 };
 
 passport.use(new JwtStrategy(jwtStrategyOptions, function(jwt_payload, done) {
