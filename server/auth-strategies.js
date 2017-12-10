@@ -9,8 +9,8 @@ const TwitterTokenStrategy = require('passport-twitter-token');
 
 //passport strategies
 passport.use(new TwitterTokenStrategy({
-      consumer_key:  process.env.TWITTER_CONSUMER_KEY,
-      consumer_secret: process.env.TWITTER_CONSUMER_SECRET
+      consumerKey:  process.env.TWITTER_CONSUMER_KEY,
+      consumerSecret: process.env.TWITTER_CONSUMER_SECRET
     },
     function (token, tokenSecret, profile, done) {
       User.findOne({username:profile.username.toLowerCase()},function(err,user){
