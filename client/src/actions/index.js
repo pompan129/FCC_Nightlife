@@ -51,8 +51,6 @@ export const setAuthErrorMessage = (message)=>{
 }
 
 const setBusinesses = (businesses)=>{
-  console.log("setBusinesses");//todo
-
   return {
     type: SET_BUSINESSES,
     payload: businesses
@@ -94,11 +92,9 @@ export const LoginUser_JWT=(jwt,username)=>{
 //a thunk
 export const authRefreshJWT = (token)=>{
   return (dispatch, getState) => {
-    console.log("authJWT called>>>");//TODO
 
     if(!token){
       dispatch(batchActions([setUsername(""), setAuthentication(false)]));
-      return console.log("authJWT called w/out JWT");//TODO
     }
 
     //start spinner
@@ -107,8 +103,6 @@ export const authRefreshJWT = (token)=>{
     //verify token w API
     Axios.get('/api/auth/refresh/jwt',{params:{token}, headers:{"Authorization":"Bearer " + token}})
       .then((resp)=>{
-        console.log("Axios.get('/api/auth/refresh/jwt': ",resp)//TODO
-
         dispatch(batchActions([setUsername(resp.data.username), setAuthentication(true),renderModal(false),fecthDone()]));
         localStorage.setItem("jwt",token);
       })
@@ -132,7 +126,6 @@ export const fetchBusinesses = (term, location,callback)=>{
 
     Axios.get('/api/businesses/getall',{params:{term,location}})
       .then(function (resp) {
-          console.log("fetchBusinesses",term, resp);//todo
           localStorage.setItem("location",location);
           localStorage.setItem("term",term);
           const businesses = resp.data.reduce((accumulator,current)=>{
@@ -141,7 +134,6 @@ export const fetchBusinesses = (term, location,callback)=>{
           },{});
           callback();
           dispatch(batchActions([setBusinesses(businesses),fecthDone()]));
-          console.log("fetchBusinesses(2)",callback);//todo
           //callback();
       })
       .catch(function (error) {
@@ -159,10 +151,6 @@ export const addRemoveUserToBusiness = (busid)=>{
           Axios.post('/api/business/modify',{user:getState().user.username,busid})
           .then(function (resp) {
             if(resp.data.success){
-              console.log("addRemoveUserToBusiness(2)",  resp.data);//todo
-              //const newBusinesses = getState().businesses;
-              //newBusinesses[busid].going =  resp.data.going
-              console.log("addRemoveUserToBusiness(3)",  busid,resp.data.going);//todo
               dispatch(modifyBusinessGoing(busid,resp.data.going));
             }
           })
@@ -176,7 +164,6 @@ export const addRemoveUserToBusiness = (busid)=>{
 
 //a thunk
 export const signupUser = ({email,password})=>{
-  console.log("signupUser",email,password);// TODO:
   const batch = [];
   return (dispatch, getState) => {
     Axios.post('/api/user/signup',{username:email,password})

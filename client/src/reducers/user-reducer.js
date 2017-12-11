@@ -1,7 +1,6 @@
 import {SET_AUTHENTICATION,SET_USERNAME,SET_AUTH_ERROR,LOGIN_USER_JWT} from "../actions";
 
 export default function (state={authenticated:false,username:""}, action) {
-    console.log("user-reducer: ",action.payload);//TODO
     switch (action.type) {
         case SET_AUTHENTICATION:
           return {...state,authenticated:action.payload};

@@ -33,7 +33,6 @@ class Signup extends Component{
   }
 
   render(){
-    console.log("Signup", this.state);// TODO:
     return (
       <div className="signup-panel">
         <h3>Signup</h3>

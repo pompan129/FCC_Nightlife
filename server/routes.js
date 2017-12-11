@@ -158,8 +158,4 @@ module.exports = function(app){
     })
   });
 
-  /*app.get('/api/businesses/attending',(req,resp)=>{//TODO what is this???
-      const  {businesses} = req.query;
-    })*/
-
 }

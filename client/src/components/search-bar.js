@@ -23,7 +23,6 @@ class SearchBar extends React.Component{
     }
 
     render() {
-      console.log("SearchBar",this.state.value);//todo
       return (
         <div className="row">
           <form onSubmit={this.handleSubmit} className="col-sm-6 col-sm-offset-3">

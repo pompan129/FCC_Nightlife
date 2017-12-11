@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { BrowserRouter,Route,Switch, Link} from 'react-router-dom';
-import { withRouter } from 'react-router';   ///todo
+import { withRouter } from 'react-router';
 import Navbar from './components/navbar';
 import SearchBar from './components/search-bar';
 import Home from './components/home';
@@ -11,13 +11,12 @@ import Signin from './components/signin';
 import Loader from "./components/loader";
 import ModalWrapper from "./components/modal-wrapper";
 import BusinessList from './components/business-list';
-import {fetchBusinesses,
-    renderModal,
+import { renderModal,
     signOut,
     addRemoveUserToBusiness,
     setAuthErrorMessage,
     authRefreshJWT
-  } from './actions';//todo remove fetchBusinesses?
+  } from './actions';
 import logo from './robot_1.png';
 import './App.css';
 
@@ -26,7 +25,6 @@ class App extends Component {
   componentWillMount() {
     const token = localStorage.getItem("jwt");
       if(!this.props.user.authenticated && token){
-        console.log("!Auth w token>>>",token);//TODO
         localStorage.setItem("jwt","");
         this.props.authRefreshJWT(token);
       }
@@ -79,8 +77,7 @@ function mapStateToProps({user,businesses,message,modal}){
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(
-      {fetchBusinesses,
-        renderModal,
+      { renderModal,
         signOut,
         addRemoveUserToBusiness,
         setAuthErrorMessage,

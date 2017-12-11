@@ -3,7 +3,6 @@ import './home.css';
 import { Redirect} from 'react-router-dom'
 
 const Home = (props)=>{
-  console.log("home", props);//todo
   return <div className="home">
           <p>Enter a location above.</p>
           <p>See what places are hoppin' tonight and let your friends know your going!</p>

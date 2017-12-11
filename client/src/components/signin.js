@@ -36,7 +36,6 @@ class Signin extends Component{
   onTwitterSuccess(resp){
     const token = resp.headers.get('x-auth-token');
     resp.json().then(data=>{
-      console.log("onTwitterSuccess",data,token, data.username);//TODO
       this.props.LoginUser_JWT(token, data.username);
       this.props.renderModal(false);
     });
