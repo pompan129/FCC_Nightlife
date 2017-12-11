@@ -65,7 +65,6 @@ const modifyBusinessGoing = (busid, going)=>{
 }
 
 export const renderModal = (modalType)=>{
-  console.log("renderModal",modalType)
   return {
     type: RENDER_MODAL,
     payload: modalType
