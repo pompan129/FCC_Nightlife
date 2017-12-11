@@ -43,12 +43,12 @@ class App extends Component {
                 renderModal={(modal)=>this.props.renderModal(modal)}
                 authenticated={this.props.user.authenticated}>
               </Navbar>
-              <Link to="/">
-                <div className="App-logo"
-                  onClick={()=>{localStorage.setItem("location","");}}>
+              <div className="App-logo"
+                onClick={()=>{localStorage.setItem("location","");}}>
+                <Link to="/">
                   <img src={logo} alt="logo"/>
-                </div>
-              </Link>
+                </Link>
+              </div>
               <h1>Nightlife Coordinate-Imatron</h1>
               <SearchBar />
             </div>

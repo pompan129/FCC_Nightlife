@@ -89,7 +89,7 @@ module.exports = function(app){
     request.post({
       url: 'https://api.twitter.com/oauth/request_token',
       oauth: {
-        oauth_callback: "http%3A%2F%2Flocalhost%3A3000%2Ftwitter-callback",
+        oauth_callback: "https%3A%2F%2Ffcc-nightlife-p129.herokuapp.com%2Flist",
         consumer_key:  process.env.TWITTER_CONSUMER_KEY,
         consumer_secret: process.env.TWITTER_CONSUMER_SECRET
       }
