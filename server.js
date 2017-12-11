@@ -13,8 +13,8 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));//TODO
 
   app.get('/', function (req, res) {
-    console.log("call to home>>>>>>>>>>>>");
-    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+    console.log("call to home>>>>>>>>>>>>",__dirname);
+    res.sendFile(path.join('client/build', 'index.html'));
   });
 }else{
   console.log(">>>(process.env.NODE_ENV !== 'production'");
