@@ -80,7 +80,6 @@ export const fecthDone = ()=>{
 }
 
 export const LoginUser_JWT=(jwt,username)=>{
-  console.log("LoginUser_JWT", jwt,username);
   localStorage.setItem("jwt",jwt);
   return {
     type: LOGIN_USER_JWT,
@@ -144,7 +143,6 @@ export const fetchBusinesses = (term, location,callback)=>{
 
 //a thunk
 export const addRemoveUserToBusiness = (busid)=>{
-    console.log("addRemoveUserToBusiness(1)>>",busid)
     return (dispatch, getState) => {
       if(getState().user.authenticated  && getState().user.username){
           Axios.post('/api/business/modify',{user:getState().user.username,busid})
@@ -197,7 +195,6 @@ export const signinUser = ({email,password})=>{
             batch.push(renderModal(false));
             dispatch(batchActions(batch));
           }else{
-            console.log('error.response.data === "else"');
             batch.push(signOut());
             batch.push(setAuthErrorMessage("server error.Not able to authenticate."));
             dispatch(batchActions(batch));

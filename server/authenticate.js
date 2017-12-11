@@ -3,7 +3,6 @@ const jwt = require("jwt-simple");
 
 getToken = function(payload){
   const token = jwt.encode({username:payload.username}, process.env.SECRET );
-  console.log("getToken:  ",payload.username,process.env.SECRET, token);
   return token;
 }
 

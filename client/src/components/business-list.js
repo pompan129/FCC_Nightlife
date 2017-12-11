@@ -5,8 +5,6 @@ import "./business-list.css";
 
 const BusinessList = (props)=>{
 //todo -fix key in list
-  console.log("BusinessList", props)
-
   return <div className="business-list">
       {Object.keys(props.list).map((key,index)=><BusinessItem
         key={key}
