@@ -14,7 +14,7 @@ if (process.env.NODE_ENV === 'production') {
 
   app.get('/', function (req, res) {
     console.log("call to home>>>>>>>>>>>>",__dirname);
-    res.sendFile(path.join('client/build', 'index.html'));
+    res.sendFile(path.join(__dirname,'client/build', 'index.html'));
   });
 }else{
   console.log(">>>(process.env.NODE_ENV !== 'production'");
