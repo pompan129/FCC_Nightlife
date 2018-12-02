@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { BrowserRouter,Route,Switch, Link} from 'react-router-dom';
 import { withRouter } from 'react-router';
-import Navbar from './components/navbar';
+import Navbar from './components/Navbar';
 import SearchBar from './components/search-bar';
 import Home from './components/home';
 import Signup from './components/signup';
@@ -17,7 +17,7 @@ import { renderModal,
     setAuthErrorMessage,
     authRefreshJWT
   } from './actions';
-import logo from './robot_1.png';
+import logo from './assets/robot_1.png';
 import './App.css';
 
 
@@ -31,6 +31,7 @@ class App extends Component {
   }
 
   render() {
+      console.log("businesses:", this.props.businesses);
       return (
         <div className="App">
             <div className="App-header">

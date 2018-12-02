@@ -4,8 +4,10 @@ const bcrypt = require('bcrypt-nodejs');
 
 
 const busSchema = new Schema({
-  busid: { type: String, unique: true, lowercase: true },
+  busid: { type: String, unique: true},
   going: [String]
+},{
+  usePushEach: true
 });
 
 module.exports = mongoose.model('business', busSchema);

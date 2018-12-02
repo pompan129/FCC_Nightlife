@@ -1,5 +1,5 @@
 import React from "react";
-import './home.css';
+import './Home.css';
 import { Redirect} from 'react-router-dom'
 
 const Home = (props)=>{

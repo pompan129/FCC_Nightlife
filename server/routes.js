@@ -120,20 +120,30 @@ module.exports = function(app){
     const busid = req.body.busid;
     const user = req.body.user;
 
+    console.log("-----------------business modify", busid, user, req.body);
+
     if(!busid || !user){return next(new TypeError('inValid Business ID or username ' + busid + "  " + user ));}
 
     Business.findOne({busid:busid},function(err,business){
-      if(err){return next(err);}
+      console.log("-----------------business findOne", business,busid);
+      if(err){
+        console.log("mongo error findOne", err);
+        return next(err);
+      }
 
       //if business in DB modify list of people going to business
       if(business){
+        console.log("business found", business);
 
         //if user exists in list remove them
         if(business.going.includes(user)){
           business.going = business.going.filter(item=>item != user);
         }
         //if user not in list add them to list
-        else{business.going.push(user);}
+        else{
+          console.log("----user not in list", business)
+          business.going.push(user);
+        }
 
         //save business w/ new list of attendees
         business.save(function(err){
@@ -144,6 +154,7 @@ module.exports = function(app){
       }
       //if business not in DB add it & user
       else{
+
         const newBusiness = new Business({
           busid: busid,
           going:[user]
@@ -155,6 +166,16 @@ module.exports = function(app){
             resp.json({success:true,busid:busid,going:newBusiness.going})
         })
       }
+    })
+  });
+
+
+
+  //todo
+  app.post('/api/business/test',(req,resp,next)=>{
+    Business.findOne({busid:req.body.busid},function(err,business){
+      console.log('test:' ,business,  req.body);
+      resp.send(business);
     })
   });
 

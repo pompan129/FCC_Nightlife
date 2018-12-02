@@ -4,7 +4,7 @@ import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import {setAuthentication} from "./actions";
-import App from './App';
+import App from './app';
 import reducers ,{enableBatching} from './reducers';
 import{BrowserRouter } from 'react-router-dom'
 import './index.css';
@@ -12,8 +12,8 @@ import './index.css';
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 const store = createStoreWithMiddleware(enableBatching(reducers));
 
-const token = localStorage.getItem("jwt");
-const username = localStorage.getItem("username");
+const token = localStorage.getItem("jwt");  //todo needed?
+const username = localStorage.getItem("username");   //todo needed?
 
 ReactDOM.render(
   <Provider store={store}>
